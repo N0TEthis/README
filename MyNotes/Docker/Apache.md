@@ -16,8 +16,8 @@ docker run -d -p 8088:80 --name welcome-to-docker docker/welcome-to-docker
 
 [Открыть http://localhost:8088 в браузере](http://localhost:8088)  
 
-
 1. ![амам](./imgApache/1.png)
+
 
 2. ![амам](./imgApache/2.png)
 
