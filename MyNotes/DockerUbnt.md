@@ -16,7 +16,7 @@
 - [Flask+Python (мини-проект)](./DockerUbnt/%20Flask+Python_Mini.md) +
 - [Приложение на C# (.NET) с публикацией](./DockerUbnt/dotNet.md) +
 - [Консольное приложение на C++](./DockerUbnt/dotNet.md) +
-- [Консольное приложение на C++ и FTXUI](./DockerUbnt/ftxui.md) +-
+- [Консольное приложение на C++ и FTXUI](./DockerUbnt/ftxui.md) +
 - [Wow - консольное псевдографическое приложение на C++ и FTXUI]() -
 - [Оконное приложение на C++ и FLTK]() -
 - [Приложение на Rust]() -
