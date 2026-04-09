@@ -65,4 +65,4 @@ docker run -it --entrypoint sh cpp-hello
 exit
 ```
 
-1. ![амам](./imgDOCKERubnt/3.png)
+ ![амам](./imgDOCKERubnt/3.png)

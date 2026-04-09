@@ -98,6 +98,6 @@ docker run -d --name my-running-app -p 8082:5000 my-flask-app
 
 [Откройте браузер и перейдите по адресу http://localhost:8082](http://localhost:8082)
 
-1. ![амам](./imgDOCKERubnt/1.png)
+ ![амам](./imgDOCKERubnt/1.png)
 
 <!--      1. ![амам]()        -->

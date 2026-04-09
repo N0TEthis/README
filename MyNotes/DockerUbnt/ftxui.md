@@ -121,4 +121,4 @@ docker run -it --entrypoint bash ftxui-demo
 exit
 ```
 
- 1. ![амам](./imgDOCKERubnt/4.png) 
+ ![амам](./imgDOCKERubnt/4.png) 
