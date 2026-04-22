@@ -73,3 +73,5 @@ docker run -d -p 8081:80 --name my-php-app php-app
 
 [Откройте браузер и перейдите по адресу http://localhost:8081](http://localhost:8081)
 
+
+ ![амам](./imgDOCKERubnt/9.png) 

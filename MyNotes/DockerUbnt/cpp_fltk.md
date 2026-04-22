@@ -113,3 +113,4 @@ docker run -it --entrypoint bash fltk-demo
 ```shell
 exit
 ```
+ ![амам](./imgDOCKERubnt/6.png) 

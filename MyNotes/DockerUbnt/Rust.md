@@ -93,3 +93,4 @@ docker run -it --rm --entrypoint sh rust-app
 ./rust-app
 ```
 
+ ![амам](./imgDOCKERubnt/7.png) 

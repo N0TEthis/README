@@ -142,3 +142,5 @@ docker run -it --rm \
   -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
   qt6-app
 ```
+
+ ![амам](./imgDOCKERubnt/15.png) 

@@ -125,3 +125,5 @@ chmod +x run.sh
 ```shell
 docker logs <container_id>
 ```
+
+ ![амам](./imgDOCKERubnt/14.png) 
