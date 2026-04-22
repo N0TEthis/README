@@ -17,14 +17,14 @@
 - [Приложение на C# (.NET) с публикацией](./DockerUbnt/dotNet.md) +
 - [Консольное приложение на C++](./DockerUbnt/cpp.md) +
 - [Консольное приложение на C++ и FTXUI](./DockerUbnt/ftxui.md) +
-- [Wow - консольное псевдографическое приложение на C++ и FTXUI]() -
-- [Оконное приложение на C++ и FLTK]() -
-- [Приложение на Rust]() -
-- [Приложение на Ruby]() -
-- [Приложение на PHP]() -
-- [Node.JS]() -
-- [Приложение на TypeScript]() -
-- [Pascal]() -
-- [Java]() -
-- [Qt5/C++]() -
-- [Qt6/C++]() -
+- [Wow - консольное псевдографическое приложение на C++ и FTXUI](./DockerUbnt/ftxui_wow.md) +
+- [Оконное приложение на C++ и FLTK](./DockerUbnt/cpp_fltk.md) -
+- [Приложение на Rust](./DockerUbnt/Rust.md) -
+- [Приложение на Ruby](./DockerUbnt/Ruby.md) -
+- [Приложение на PHP](./DockerUbnt/php.md) -
+- [Node.JS](./DockerUbnt/Node_js.md) -
+- [Приложение на TypeScript](./DockerUbnt/TypeScript.md) -
+- [Pascal](./DockerUbnt/Pascal.md) -
+- [Java](./DockerUbnt/java.md) -
+- [Qt5/C++](./DockerUbnt/cppQt5.md) -
+- [Qt6/C++](./DockerUbnt/cppQt6.md) -
