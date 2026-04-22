@@ -19,7 +19,7 @@
 - [Консольное приложение на C++ и FTXUI](./DockerUbnt/ftxui.md) +
 - [Wow - консольное псевдографическое приложение на C++ и FTXUI](./DockerUbnt/ftxui_wow.md) +
 - [Оконное приложение на C++ и FLTK](./DockerUbnt/cpp_fltk.md) +
-- [Приложение на Rust](./DockerUbnt/Rust.md) -
+- [Приложение на Rust](./DockerUbnt/Rust.md) +
 - [Приложение на Ruby](./DockerUbnt/Ruby.md) +
 - [Приложение на PHP](./DockerUbnt/php.md) +
 - [Node.JS](./DockerUbnt/Node_js.md) +
