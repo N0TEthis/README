@@ -313,7 +313,11 @@ ls -la hello-go-linux-amd64
 
 **Git Bash / Linux / WSL / macOS:**
 ```shell
+<<<<<<< HEAD
 cd ~/hello-go
+=======
+cd ~
+>>>>>>> 4feb796297f1ac347bb0124f60dd2d97470bdf08
 git init
 git add .
 git commit -m "Initial commit: Go app with CI/CD to GitHub Releases"
@@ -325,7 +329,10 @@ git push -u origin main
 ```
 **PowerShell (Windows):**
 ```powershell
+<<<<<<< HEAD
 cd ~/hello-go
+=======
+>>>>>>> 4feb796297f1ac347bb0124f60dd2d97470bdf08
 git init
 git add .
 git commit -m "Initial commit: Go app with CI/CD to GitHub Releases"
@@ -360,7 +367,11 @@ git push origin v1.0.0
 2. `release` — **запустится**, соберёт 5 бинарников в параллельных job'ах
 3. Создастся GitHub Release `v1.0.0` с прикреплёнными файлами
 
+<<<<<<< HEAD
 **Workflow** выполняется ~2–3 минуты. После успешного **Actions** (зелёная лампочка во вкладке **Actions**) можно продолжить выполнение задания.
+=======
+**Workflow** выполняется ~2–3 минуты. После успешного Actions (зелёная лампочка во вкладке Actions) можно продолжить выполнение задания.
+>>>>>>> 4feb796297f1ac347bb0124f60dd2d97470bdf08
 
 **Проверка:** откройте
 ```
