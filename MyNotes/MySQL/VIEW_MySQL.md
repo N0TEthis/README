@@ -406,3 +406,5 @@ DELETE FROM customers WHERE email = 'test@example.com';
 ---
 
 ссылка на dump: [dump](./VIEW/dump.sql)
+
+бебебе
