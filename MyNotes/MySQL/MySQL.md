@@ -368,3 +368,6 @@ docker run --name my-mysql \
  
  ссылка на dump: [dump](./my-mysql/dump.sql)
  ссылка на log: [log](./my-mysql/general.log)
+
+
+
