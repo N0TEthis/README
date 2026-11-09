@@ -1,0 +1,13 @@
+2026-11-09T08:54:16.007576Z	   13 Query	select @@version_comment limit 1
+2026-11-09T08:57:32.106025Z	   14 Query	select @@version_comment limit 1
+2026-11-09T08:57:32.106154Z	   14 Query	SELECT DATABASE()
+2026-11-09T08:57:32.106290Z	   14 Query	SHOW TABLES
+2026-11-09T08:58:47.891107Z	   15 Query	select @@version_comment limit 1
+2026-11-09T08:58:47.891351Z	   15 Query	SHOW VARIABLES LIKE 'general_log'
+2026-11-09T08:58:47.892908Z	   15 Query	SHOW VARIABLES LIKE 'general_log_file'
+2026-11-09T08:58:58.710080Z	   16 Query	select @@version_comment limit 1
+2026-11-09T08:58:58.710256Z	   16 Query	SHOW TABLES
+2026-11-09T08:58:58.711405Z	   16 Query	SELECT * FROM customers_3nf
+2026-11-09T08:58:58.711645Z	   16 Query	SELECT * FROM products_3nf
+2026-11-09T08:58:58.711819Z	   16 Query	SELECT * FROM orders_3nf
+2026-11-09T08:58:58.711974Z	   16 Query	SELECT * FROM order_items_3nf
