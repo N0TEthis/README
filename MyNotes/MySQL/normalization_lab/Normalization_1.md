@@ -328,5 +328,3 @@ INSERT INTO sales_unnormalized_2 VALUES
 ![miao](./1IMG/111.png)
 
 ---
-
-mimimi
