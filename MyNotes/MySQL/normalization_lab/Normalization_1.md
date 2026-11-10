@@ -301,7 +301,7 @@ INSERT INTO sales_unnormalized_2 VALUES
 
 ссылка на dump после:[ddump](./sales_norm_after.sql)
 
-ссылка на log:[loggg](./actions.log)
+ссылка на log:[loggg](./general.log)
 
 скриншоты ам ам ам:
 
