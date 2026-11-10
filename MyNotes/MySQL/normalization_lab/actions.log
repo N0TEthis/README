@@ -1,0 +1,123 @@
+mysql> SHOW TABLES;
++----------------------+
+| Tables_in_sales_norm |
++----------------------+
+| customers            |
+| products             |
+| report_items         |
+| reports              |
+| sales_unnormalized_2 |
++----------------------+
+5 rows in set (0.00 sec)
+
+mysql> 
+mysql> SELECT COUNT(*) FROM sales_unnormalized_2;
++----------+
+| COUNT(*) |
++----------+
+|        7 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> 
+mysql> SELECT * FROM customers;
++-------------+----------------+
+| customer_id | customer_name  |
++-------------+----------------+
+|          12 | Дания          |
+|          23 | Испания        |
+|          25 | Албания        |
++-------------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> 
+mysql> SELECT * FROM products;
++------------+------------------+--------+
+| product_id | product_name     | price  |
++------------+------------------+--------+
+|        101 | Дыни             | 800.00 |
+|        102 | Клубника         | 150.00 |
+|        103 | Яблоки           | 120.00 |
+|        104 | Лимоны           | 200.00 |
++------------+------------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> 
+mysql> SELECT * FROM reports;
++-----------+-------------+-------------+
+| report_id | report_date | customer_id |
++-----------+-------------+-------------+
+|      1101 | 2026-03-05  |          12 |
+|      1102 | 2026-03-07  |          23 |
+|      1103 | 2026-03-08  |          25 |
+|      1104 | 2026-03-10  |          12 |
+|      1105 | 2026-03-12  |          25 |
++-----------+-------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> 
+mysql> SELECT * FROM report_items;
++-----------+------------+----------+
+| report_id | product_id | quantity |
++-----------+------------+----------+
+|      1101 |        101 |     1100 |
+|      1101 |        102 |      300 |
+|      1102 |        103 |     1700 |
+|      1103 |        104 |      500 |
+|      1104 |        101 |     2500 |
+|      1105 |        103 |     2000 |
+|      1105 |        104 |      700 |
++-----------+------------+----------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT SUM(p.price * ri.quantity) AS total_sales
+    -> FROM report_items ri
+    -> JOIN products p
+    -> ON ri.product_id = p.product_id;
++-------------+
+| total_sales |
++-------------+
+|  3609000.00 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> DESCRIBE customers;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| customer_id   | int          | NO   | PRI | NULL    |       |
+| customer_name | varchar(100) | NO   |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> DESCRIBE products;
++--------------+---------------+------+-----+---------+-------+
+| Field        | Type          | Null | Key | Default | Extra |
++--------------+---------------+------+-----+---------+-------+
+| product_id   | int           | NO   | PRI | NULL    |       |
+| product_name | varchar(100)  | NO   |     | NULL    |       |
+| price        | decimal(10,2) | NO   |     | NULL    |       |
++--------------+---------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> DESCRIBE reports;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| report_id   | int  | NO   | PRI | NULL    |       |
+| report_date | date | NO   |     | NULL    |       |
+| customer_id | int  | NO   | MUL | NULL    |       |
++-------------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> DESCRIBE report_items;
++------------+------+------+-----+---------+-------+
+| Field      | Type | Null | Key | Default | Extra |
++------------+------+------+-----+---------+-------+
+| report_id  | int  | NO   | PRI | NULL    |       |
+| product_id | int  | NO   | PRI | NULL    |       |
+| quantity   | int  | NO   |     | NULL    |       |
++------------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> notee;
