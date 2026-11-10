@@ -1,0 +1,127 @@
+/usr/sbin/mysqld, Version: 8.0.46 (MySQL Community Server - GPL). started with:
+Tcp port: 3306  Unix socket: /var/run/mysqld/mysqld.sock
+Time                 Id Command    Argument
+2026-11-10T07:03:39.643301Z	    9 Query	SET GLOBAL log_output = 'FILE'
+2026-11-10T07:03:39.644291Z	    9 Query	SET GLOBAL general_log_file = '/var/lib/mysql/general.log'
+/usr/sbin/mysqld, Version: 8.0.46 (MySQL Community Server - GPL). started with:
+Tcp port: 3306  Unix socket: /var/run/mysqld/mysqld.sock
+Time                 Id Command    Argument
+2026-11-10T07:03:39.647002Z	    9 Query	SET GLOBAL general_log = 'ON'
+2026-11-10T07:03:39.647602Z	    9 Query	DROP DATABASE IF EXISTS alias_db
+2026-11-10T07:03:39.680219Z	    9 Query	SELECT DATABASE()
+2026-11-10T07:03:39.681089Z	    9 Query	CREATE DATABASE alias_db
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci
+2026-11-10T07:03:39.685536Z	    9 Query	SELECT DATABASE()
+2026-11-10T07:03:39.685858Z	    9 Init DB	alias_db
+2026-11-10T07:03:39.686816Z	    9 Query	show databases
+2026-11-10T07:03:39.687964Z	    9 Query	show tables
+2026-11-10T07:03:39.691450Z	    9 Query	CREATE TABLE customers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    city VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+2026-11-10T07:03:39.718975Z	    9 Query	CREATE TABLE orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    order_date DATE NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    status VARCHAR(20) DEFAULT 'new',
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
+)
+2026-11-10T07:03:39.743232Z	    9 Query	CREATE TABLE employees (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    position VARCHAR(100),
+    manager_id INT,
+    FOREIGN KEY (manager_id) REFERENCES employees(id)
+)
+2026-11-10T07:03:39.767862Z	    9 Query	INSERT INTO customers (name, email, city) VALUES
+('Иван Иванов', 'ivan@example.com', 'Москва'),
+('Пётр Петров', 'petr@example.com', 'Санкт-Петербург'),
+('Мария Сидорова', 'maria@example.com', 'Москва'),
+('Алексей Смирнов', 'alex@example.com', 'Казань'),
+('Ольга Кузнецова', 'olga@example.com', 'Новосибирск')
+2026-11-10T07:03:39.776665Z	    9 Query	INSERT INTO orders (customer_id, order_date, amount, status) VALUES
+(1, '2026-10-01', 1500.00, 'paid'),
+(1, '2026-10-05', 2300.50, 'paid'),
+(2, '2026-10-03', 800.00, 'new'),
+(3, '2026-10-07', 4200.00, 'paid'),
+(3, '2026-10-10', 1100.00, 'cancelled'),
+(4, '2026-10-12', 950.00, 'new')
+2026-11-10T07:03:39.781870Z	    9 Query	INSERT INTO employees (name, position, manager_id) VALUES
+('Анна Петрова', 'Генеральный директор', NULL),
+('Игорь Смирнов', 'Финансовый директор', 1),
+('Елена Кузнецова', 'Технический директор', 1),
+('Дмитрий Орлов', 'Ведущий разработчик', 3),
+('Ольга Зайцева', 'Разработчик', 3),
+('Сергей Волков', 'Бухгалтер', 2)
+2026-11-10T07:03:39.790521Z	    9 Query	SHOW TABLES
+2026-11-10T07:03:39.793195Z	    9 Query	SELECT * FROM customers
+2026-11-10T07:03:39.794629Z	    9 Query	SELECT * FROM orders
+2026-11-10T07:03:39.796298Z	    9 Query	SELECT * FROM employees
+2026-11-10T07:03:39.797765Z	    9 Query	SELECT customers.name, orders.order_date, orders.amount
+FROM customers
+JOIN orders ON customers.id = orders.customer_id
+2026-11-10T07:03:39.799098Z	    9 Query	SELECT c.name, o.order_date, o.amount
+FROM customers c
+JOIN orders o ON c.id = o.customer_id
+2026-11-10T07:03:39.800605Z	    9 Query	SELECT name AS customer_name,
+       email AS contact_email
+FROM customers
+2026-11-10T07:03:39.801836Z	    9 Query	SELECT customer_id,
+       COUNT(*) AS order_count,
+       SUM(amount) AS total_amount
+FROM orders
+GROUP BY customer_id
+2026-11-10T07:03:39.802506Z	    9 Query	SELECT id, amount * 2 AS double_amount
+FROM orders
+ORDER BY double_amount DESC
+2026-11-10T07:03:39.803895Z	    9 Query	SELECT id, amount * 2 AS double_amount
+FROM orders
+WHERE amount * 2 > 1000
+2026-11-10T07:03:39.806005Z	    9 Query	SELECT e.name AS employee,
+       m.name AS manager
+FROM employees e
+JOIN employees m ON e.manager_id = m.id
+2026-11-10T07:03:39.808066Z	    9 Query	SELECT *
+FROM (
+    SELECT customer_id, SUM(amount) AS total
+    FROM orders
+    GROUP BY customer_id
+) AS t
+2026-11-10T07:03:39.810399Z	    9 Query	SELECT c.name,
+       (SELECT COUNT(*)
+        FROM orders o
+        WHERE o.customer_id = c.id) AS order_count
+FROM customers c
+2026-11-10T07:03:39.813130Z	    9 Query	SELECT c.name AS customer,
+       o.order_date,
+       o.amount,
+       o.amount * 2 AS double_amount
+FROM customers c
+JOIN orders o ON c.id = o.customer_id
+WHERE o.status = 'paid'
+ORDER BY double_amount DESC
+2026-11-10T07:03:39.815566Z	    9 Query	SELECT c.name, o.total
+FROM customers c
+JOIN (
+    SELECT customer_id, SUM(amount) AS total
+    FROM orders
+    GROUP BY customer_id
+) o ON c.id = o.customer_id
+WHERE o.total > 2000
+2026-11-10T07:03:39.817880Z	    9 Query	SELECT customer_id,
+       COUNT(*) AS order_count,
+       SUM(amount) AS total_amount
+FROM orders
+GROUP BY customer_id
+HAVING total_amount > 1000
+ORDER BY total_amount DESC
+2026-11-10T07:03:39.818969Z	    9 Query	DESCRIBE customers
+2026-11-10T07:03:39.822295Z	    9 Query	DESCRIBE orders
+2026-11-10T07:03:39.823539Z	    9 Query	DESCRIBE employees
+2026-11-10T07:03:40.524973Z	    9 Query	SELECT VERSION()
+2026-11-10T07:03:49.178624Z	    9 Quit	
