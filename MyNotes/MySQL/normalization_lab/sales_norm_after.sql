@@ -16,27 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `customers`
+-- Table structure for table `clients`
 --
 
-DROP TABLE IF EXISTS `customers`;
+DROP TABLE IF EXISTS `clients`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `customers` (
-  `customer_id` int NOT NULL,
-  `customer_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`customer_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `clients` (
+  `client_id` int NOT NULL,
+  `client_name` varchar(100) NOT NULL,
+  `client_city` varchar(100) NOT NULL,
+  PRIMARY KEY (`client_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `customers`
+-- Dumping data for table `clients`
 --
 
-LOCK TABLES `customers` WRITE;
-/*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (12,'Дания'),(23,'Испания'),(25,'Албания');
-/*!40000 ALTER TABLE `customers` ENABLE KEYS */;
+LOCK TABLES `clients` WRITE;
+/*!40000 ALTER TABLE `clients` DISABLE KEYS */;
+INSERT INTO `clients` VALUES (101,'Иванов Иван','Москва'),(102,'Петрова Мария','Санкт-Петербург'),(103,'Сидоров Алексей','Казань');
+/*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -48,10 +49,10 @@ DROP TABLE IF EXISTS `products`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `products` (
   `product_id` int NOT NULL,
-  `product_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price` decimal(10,2) NOT NULL,
+  `product_name` varchar(100) NOT NULL,
+  `unit_price` decimal(10,2) NOT NULL,
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,92 +61,63 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (101,'Дыни',800.00),(102,'Клубника',150.00),(103,'Яблоки',120.00),(104,'Лимоны',200.00);
+INSERT INTO `products` VALUES (201,'Монитор',15000.00),(202,'Клавиатура',2000.00),(203,'Мышь',1000.00),(204,'Наушники',3500.00),(205,'Колонки',2500.00);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `report_items`
+-- Table structure for table `sale_items`
 --
 
-DROP TABLE IF EXISTS `report_items`;
+DROP TABLE IF EXISTS `sale_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `report_items` (
-  `report_id` int NOT NULL,
+CREATE TABLE `sale_items` (
+  `sale_id` int NOT NULL,
   `product_id` int NOT NULL,
   `quantity` int NOT NULL,
-  PRIMARY KEY (`report_id`,`product_id`),
+  PRIMARY KEY (`sale_id`,`product_id`),
   KEY `product_id` (`product_id`),
-  CONSTRAINT `report_items_ibfk_1` FOREIGN KEY (`report_id`) REFERENCES `reports` (`report_id`),
-  CONSTRAINT `report_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `sale_items_ibfk_1` FOREIGN KEY (`sale_id`) REFERENCES `sales` (`sale_id`),
+  CONSTRAINT `sale_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `report_items`
+-- Dumping data for table `sale_items`
 --
 
-LOCK TABLES `report_items` WRITE;
-/*!40000 ALTER TABLE `report_items` DISABLE KEYS */;
-INSERT INTO `report_items` VALUES (1101,101,1100),(1101,102,300),(1102,103,1700),(1103,104,500),(1104,101,2500),(1105,103,2000),(1105,104,700);
-/*!40000 ALTER TABLE `report_items` ENABLE KEYS */;
+LOCK TABLES `sale_items` WRITE;
+/*!40000 ALTER TABLE `sale_items` DISABLE KEYS */;
+INSERT INTO `sale_items` VALUES (5001,201,2),(5001,202,1),(5002,203,3),(5002,204,1),(5003,205,2),(5004,202,5),(5004,203,2),(5005,201,1),(5006,204,2),(5006,205,1);
+/*!40000 ALTER TABLE `sale_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `reports`
+-- Table structure for table `sales`
 --
 
-DROP TABLE IF EXISTS `reports`;
+DROP TABLE IF EXISTS `sales`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `reports` (
-  `report_id` int NOT NULL,
-  `report_date` date NOT NULL,
-  `customer_id` int NOT NULL,
-  PRIMARY KEY (`report_id`),
-  KEY `customer_id` (`customer_id`),
-  CONSTRAINT `reports_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `sales` (
+  `sale_id` int NOT NULL,
+  `sale_date` date NOT NULL,
+  `client_id` int NOT NULL,
+  PRIMARY KEY (`sale_id`),
+  KEY `client_id` (`client_id`),
+  CONSTRAINT `sales_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `clients` (`client_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `reports`
+-- Dumping data for table `sales`
 --
 
-LOCK TABLES `reports` WRITE;
-/*!40000 ALTER TABLE `reports` DISABLE KEYS */;
-INSERT INTO `reports` VALUES (1101,'2026-03-05',12),(1102,'2026-03-07',23),(1103,'2026-03-08',25),(1104,'2026-03-10',12),(1105,'2026-03-12',25);
-/*!40000 ALTER TABLE `reports` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `sales_unnormalized_2`
---
-
-DROP TABLE IF EXISTS `sales_unnormalized_2`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `sales_unnormalized_2` (
-  `report_id` int DEFAULT NULL,
-  `report_date` date DEFAULT NULL,
-  `customer_id` int DEFAULT NULL,
-  `customer_name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `product_id` int DEFAULT NULL,
-  `product_name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `price` decimal(10,2) DEFAULT NULL,
-  `quantity` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `sales_unnormalized_2`
---
-
-LOCK TABLES `sales_unnormalized_2` WRITE;
-/*!40000 ALTER TABLE `sales_unnormalized_2` DISABLE KEYS */;
-INSERT INTO `sales_unnormalized_2` VALUES (1101,'2026-03-05',12,'Дания',101,'Дыни',800.00,1100),(1101,'2026-03-05',12,'Дания',102,'Клубника',150.00,300),(1102,'2026-03-07',23,'Испания',103,'Яблоки',120.00,1700),(1103,'2026-03-08',25,'Албания',104,'Лимоны',200.00,500),(1104,'2026-03-10',12,'Дания',101,'Дыни',800.00,2500),(1105,'2026-03-12',25,'Албания',103,'Яблоки',120.00,2000),(1105,'2026-03-12',25,'Албания',104,'Лимоны',200.00,700);
-/*!40000 ALTER TABLE `sales_unnormalized_2` ENABLE KEYS */;
+LOCK TABLES `sales` WRITE;
+/*!40000 ALTER TABLE `sales` DISABLE KEYS */;
+INSERT INTO `sales` VALUES (5001,'2026-11-01',101),(5002,'2026-11-02',102),(5003,'2026-11-03',101),(5004,'2026-11-04',103),(5005,'2026-11-05',102),(5006,'2026-11-06',103);
+/*!40000 ALTER TABLE `sales` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -157,4 +129,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-11-10  8:58:25
+-- Dump completed on 2026-11-11  7:07:35
