@@ -1,78 +1,106 @@
 /usr/sbin/mysqld, Version: 8.0.46 (MySQL Community Server - GPL). started with:
 Tcp port: 3306  Unix socket: /var/run/mysqld/mysqld.sock
 Time                 Id Command    Argument
-2026-11-12T07:15:15.911830Z	    8 Quit	
-2026-11-12T07:15:28.258923Z	    9 Connect	root@localhost on  using Socket
-2026-11-12T07:15:28.259051Z	    9 Query	select @@version_comment limit 1
-2026-11-12T07:15:28.259200Z	    9 Query	SHOW VARIABLES LIKE 'general_log'
-2026-11-12T07:15:28.262935Z	    9 Query	SHOW VARIABLES LIKE 'general_log_file'
-2026-11-12T07:15:28.265031Z	    9 Query	SHOW VARIABLES LIKE 'log_output'
-2026-11-12T07:15:28.266396Z	    9 Quit	
-2026-11-12T07:16:01.703642Z	   10 Connect	root@localhost on  using Socket
-2026-11-12T07:16:01.703784Z	   10 Query	select @@version_comment limit 1
-2026-11-12T07:17:49.805148Z	   10 Query	CREATE DATABASE IF NOT EXISTS sales_norm
-2026-11-12T07:17:49.810099Z	   10 Query	SELECT DATABASE()
-2026-11-12T07:17:49.810332Z	   10 Init DB	sales_norm
-2026-11-12T07:17:49.811386Z	   10 Query	show databases
-2026-11-12T07:17:49.814582Z	   10 Query	show tables
-2026-11-12T07:17:49.817102Z	   10 Query	DROP TABLE IF EXISTS monthly_sales
-2026-11-12T07:17:49.819827Z	   10 Query	DROP TABLE IF EXISTS employees
-2026-11-12T07:17:49.821695Z	   10 Query	DROP TABLE IF EXISTS departments
-2026-11-12T07:17:49.826099Z	   10 Query	CREATE TABLE departments (
-    department_id INT PRIMARY KEY,
-    department_name VARCHAR(100) NOT NULL
+2026-11-12T07:54:56.387482Z	   13 Quit	
+2026-11-12T07:55:03.748917Z	   14 Connect	root@localhost on  using Socket
+2026-11-12T07:55:03.749030Z	   14 Query	select @@version_comment limit 1
+2026-11-12T07:55:03.749163Z	   14 Query	SHOW VARIABLES LIKE 'general_log'
+2026-11-12T07:55:03.750360Z	   14 Query	SHOW VARIABLES LIKE 'general_log_file'
+2026-11-12T07:55:03.751274Z	   14 Query	SHOW VARIABLES LIKE 'log_output'
+2026-11-12T07:55:03.752004Z	   14 Quit	
+2026-11-12T07:55:11.832503Z	   15 Connect	root@localhost on  using Socket
+2026-11-12T07:55:11.832661Z	   15 Query	select @@version_comment limit 1
+2026-11-12T07:55:22.993507Z	   15 Query	CREATE DATABASE IF NOT EXISTS orders_norm
+2026-11-12T07:55:23.754508Z	   15 Query	SELECT DATABASE()
+2026-11-12T07:55:23.754854Z	   15 Init DB	orders_norm
+2026-11-12T07:55:23.755806Z	   15 Query	show databases
+2026-11-12T07:55:23.756652Z	   15 Query	show tables
+2026-11-12T07:55:27.793828Z	   15 Query	DROP TABLE IF EXISTS order_items
+2026-11-12T07:55:27.798809Z	   15 Query	DROP TABLE IF EXISTS orders
+2026-11-12T07:55:27.801598Z	   15 Query	DROP TABLE IF EXISTS products
+2026-11-12T07:55:28.547020Z	   15 Query	DROP TABLE IF EXISTS representatives
+2026-11-12T07:55:36.689527Z	   15 Query	CREATE TABLE representatives (
+    representative_id INT PRIMARY KEY,
+    representative_name VARCHAR(100) NOT NULL
 )
-2026-11-12T07:17:49.848683Z	   10 Query	CREATE TABLE employees (
-    employee_id INT PRIMARY KEY,
-    employee_name VARCHAR(100) NOT NULL,
-    department_id INT NOT NULL,
-    FOREIGN KEY (department_id)
-    REFERENCES departments(department_id)
+2026-11-12T07:55:42.266259Z	   15 Query	CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(150) NOT NULL,
+    price DECIMAL(10,2) NOT NULL
 )
-2026-11-12T07:17:50.862284Z	   10 Query	CREATE TABLE monthly_sales (
-    employee_id INT NOT NULL,
-    sale_month DATE NOT NULL,
-    sales DECIMAL(12,2) NOT NULL,
-    PRIMARY KEY (employee_id, sale_month),
-    FOREIGN KEY (employee_id)
-    REFERENCES employees(employee_id)
+2026-11-12T07:55:48.324192Z	   15 Query	CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    order_date DATE NOT NULL,
+    client_id INT NOT NULL,
+    representative_id INT NOT NULL,
+    FOREIGN KEY (representative_id)
+        REFERENCES representatives(representative_id)
 )
-2026-11-12T07:17:59.922019Z	   10 Query	INSERT INTO departments VALUES
-(1, 'Отдел реализации'),
-(2, 'Отдел развития'),
-(3, 'Отдел экспорта')
-2026-11-12T07:18:05.605429Z	   10 Query	INSERT INTO employees VALUES
-(101, 'Иванов', 1),
-(102, 'Петров', 2),
-(103, 'Сидоров', 3),
-(104, 'Кузнецов', 1)
-2026-11-12T07:18:11.962345Z	   10 Query	INSERT INTO monthly_sales VALUES
-(101, '2026-01-01', 150000),
-(102, '2026-01-01', 120000),
-(103, '2026-01-01', 180000),
-(104, '2026-01-01', 95000),
-(101, '2026-02-01', 165000),
-(102, '2026-02-01', 130000),
-(103, '2026-02-01', 190000),
-(104, '2026-02-01', 105000)
-2026-11-12T07:18:17.493079Z	   10 Query	SELECT * FROM departments
-2026-11-12T07:18:17.493732Z	   10 Query	SELECT * FROM employees
-2026-11-12T07:18:18.287502Z	   10 Query	SELECT * FROM monthly_sales
-2026-11-12T07:19:48.534110Z	   10 Query	SELECT
-    e.employee_id AS 'Код сотрудника',
-    e.employee_name AS 'Имя сотрудника',
-    DATE_FORMAT(s.sale_month, '%Y-%m') AS 'Месяц',
-    s.sales AS 'Продажи',
-    d.department_id AS 'Код отдела',
-    d.department_name AS 'Название отдела'
-FROM monthly_sales s
-JOIN employees e ON s.employee_id = e.employee_id
-JOIN departments d ON e.department_id = d.department_id
-ORDER BY e.employee_id, s.sale_month
-2026-11-12T07:20:24.647493Z	   10 Query	DESCRIBE departments
-2026-11-12T07:20:24.649897Z	   10 Query	DESCRIBE employees
-2026-11-12T07:20:25.482010Z	   10 Query	DESCRIBE monthly_sales
-2026-11-12T07:20:57.254903Z	   10 Quit	
-2026-11-12T07:21:16.979579Z	   11 Connect	root@localhost on  using Socket
-2026-11-12T07:21:16.979709Z	   11 Query	select @@version_comment limit 1
-2026-11-12T07:21:16.979844Z	   11 Query	SET GLOBAL general_log = OFF
+2026-11-12T07:55:59.208276Z	   15 Query	CREATE TABLE order_items (
+    order_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    PRIMARY KEY (order_id, product_id),
+    FOREIGN KEY (order_id)
+        REFERENCES orders(order_id),
+    FOREIGN KEY (product_id)
+        REFERENCES products(product_id)
+)
+2026-11-12T07:56:04.804415Z	   15 Query	INSERT INTO representatives VALUES
+(501, 'Александр Иванов'),
+(502, 'Мария Петрова'),
+(503, 'Дмитрий Сидоров')
+2026-11-12T07:56:09.701406Z	   15 Query	INSERT INTO products VALUES
+(1001, 'Ноутбук', 75000.00),
+(1002, 'Мышь', 1500.00),
+(1003, 'Клавиатура', 3500.00),
+(1004, 'Монитор', 22000.00),
+(1005, 'Наушники', 5000.00)
+2026-11-12T07:56:14.799510Z	   15 Query	INSERT INTO orders VALUES
+(2001, '2026-10-01', 301, 501),
+(2002, '2026-10-02', 302, 502),
+(2003, '2026-10-03', 303, 501),
+(2004, '2026-10-04', 301, 503)
+2026-11-12T07:56:19.386246Z	   15 Query	INSERT INTO order_items VALUES
+(2001, 1001, 1),
+(2001, 1002, 2),
+(2001, 1003, 1),
+(2002, 1004, 2),
+(2002, 1005, 1),
+(2003, 1002, 3),
+(2003, 1004, 1),
+(2004, 1001, 2),
+(2004, 1005, 2)
+2026-11-12T07:56:28.097759Z	   15 Query	SELECT * FROM representatives
+2026-11-12T07:56:28.098375Z	   15 Query	SELECT * FROM products
+2026-11-12T07:56:28.098683Z	   15 Query	SELECT * FROM orders
+2026-11-12T07:56:29.695023Z	   15 Query	SELECT * FROM order_items
+2026-11-12T07:58:39.936404Z	   15 Query	SELECT
+    o.order_id AS 'Код заказа',
+    o.order_date AS 'Дата',
+    o.client_id AS 'Код клиента',
+    p.product_id AS 'Код товара',
+    p.product_name AS 'Название товара',
+    p.price AS 'Цена',
+    r.representative_id AS 'Код представителя',
+    r.representative_name AS 'Имя представителя',
+    oi.quantity AS 'Количество'
+FROM orders o
+JOIN order_items oi ON o.order_id = oi.order_id
+JOIN products p ON oi.product_id = p.product_id
+JOIN representatives r
+    ON o.representative_id = r.representative_id
+ORDER BY o.order_id, p.product_id
+2026-11-12T07:59:37.541079Z	   15 Query	SELECT
+    order_id,
+    COUNT(DISTINCT representative_id) AS representatives_count
+FROM orders
+GROUP BY order_id
+2026-11-12T08:00:18.856108Z	   15 Query	DESCRIBE representatives
+2026-11-12T08:00:18.858425Z	   15 Query	DESCRIBE products
+2026-11-12T08:00:18.859488Z	   15 Query	DESCRIBE orders
+2026-11-12T08:00:19.693998Z	   15 Query	DESCRIBE order_items
+2026-11-12T08:01:11.453327Z	   15 Quit	
+2026-11-12T08:01:21.061148Z	   16 Connect	root@localhost on  using Socket
+2026-11-12T08:01:21.061297Z	   16 Query	select @@version_comment limit 1
+2026-11-12T08:01:21.061495Z	   16 Query	SET GLOBAL general_log = OFF
