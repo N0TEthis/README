@@ -1,0 +1,19 @@
+2026-11-18T06:48:28.258806Z	    9 Query	CREATE DATABASE fulltext_practice CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+2026-11-18T06:48:28.262241Z	    9 Query	SELECT DATABASE()
+2026-11-18T06:48:28.262480Z	    9 Query	CREATE TABLE articles (id INT AUTO_INCREMENT PRIMARY KEY, title VARCHAR(200) NOT NULL, body TEXT NOT NULL, author VARCHAR(100), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+2026-11-18T06:48:28.277663Z	    9 Query	INSERT INTO articles (title, body, author) VALUES ('MySQL FULLTEXT search', 'MySQL provides full-text search capabilities. You can search for words in text columns using MATCH AGAINST syntax. FULLTEXT indexes are fast.', 'Иван'), ('MySQL replication', 'MySQL replication allows you to replicate data from one server to another. It is useful for backup and scaling. FULLTEXT search works well with replication.', 'Мария'), ('Optimizing MySQL queries', 'Query optimization is important for performance. Use indexes, EXPLAIN, and FULLTEXT search to speed up slow queries.', 'Пётр'), ('InnoDB full-text search', 'InnoDB supports FULLTEXT indexes since MySQL 5.6. InnoDB full-text search is crash-safe and does not have the 50% threshold that MyISAM has.', 'Ольга'), ('Boolean mode in MySQL', 'Boolean mode allows you to use operators like + (required), - (excluded), * (wildcard), and "..." (phrase) in FULLTEXT searches.', 'Алексей')
+2026-11-18T06:48:28.283806Z	    9 Query	SELECT * FROM articles
+2026-11-18T06:50:23.497992Z	   10 Query	EXPLAIN SELECT * FROM articles WHERE body LIKE '%replication%'
+2026-11-18T06:51:06.225717Z	   11 Query	CREATE FULLTEXT INDEX ft_articles ON articles(title, body)
+2026-11-18T06:51:06.395939Z	   11 Query	SHOW INDEX FROM articles
+2026-11-18T06:51:46.144808Z	   12 Query	SELECT id, title, MATCH(title, body) AGAINST ('replication') AS score FROM articles WHERE MATCH(title, body) AGAINST ('replication') ORDER BY score DESC
+2026-11-18T06:51:46.145380Z	   12 Query	SELECT id, title, MATCH(title, body) AGAINST ('MySQL replication') AS score FROM articles WHERE MATCH(title, body) AGAINST ('MySQL replication') ORDER BY score DESC
+2026-11-18T06:53:02.426747Z	   13 Query	SELECT id, title FROM articles WHERE MATCH(title, body) AGAINST ('+MySQL -replication' IN BOOLEAN MODE)
+2026-11-18T06:53:02.427365Z	   13 Query	SELECT id, title FROM articles WHERE MATCH(title, body) AGAINST ('"query optimization"' IN BOOLEAN MODE)
+2026-11-18T06:53:02.427756Z	   13 Query	SELECT id, title FROM articles WHERE MATCH(title, body) AGAINST ('replicat*' IN BOOLEAN MODE)
+2026-11-18T06:53:02.427982Z	   13 Query	SELECT id, title FROM articles WHERE MATCH(title, body) AGAINST ('+MySQL +(index* partition*) -MyISAM' IN BOOLEAN MODE)
+2026-11-18T06:53:48.006613Z	   14 Query	SHOW VARIABLES LIKE 'innodb_ft_min_token_size'
+2026-11-18T06:53:48.008780Z	   14 Query	SHOW VARIABLES LIKE 'innodb_ft_enable_stopword'
+2026-11-18T06:53:48.009693Z	   14 Query	SHOW VARIABLES LIKE 'innodb_ft_max_token_size'
+2026-11-18T06:54:19.471583Z	   15 Query	EXPLAIN SELECT * FROM articles WHERE MATCH(title, body) AGAINST ('replication')
+2026-11-18T06:55:25.904137Z	   16 Query	SELECT id, title FROM articles WHERE MATCH(title, body) AGAINST ('replication' WITH QUERY EXPANSION)
