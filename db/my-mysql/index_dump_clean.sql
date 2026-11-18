@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 26.10.0, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.46, for Linux (x86_64)
 --
--- Host: localhost    Database: sql_practice
+-- Host: localhost    Database: index_practice
 -- ------------------------------------------------------
--- Server version	26.10.0
+-- Server version	8.0.46
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,14 +14,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
-SET @@SESSION.SQL_LOG_BIN= 0;
-
---
--- GTID state at the beginning of the backup 
---
-
-SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '3362e61f-d8eb-11f1-b980-96c6dfb55175:1-30';
 
 --
 -- Table structure for table `customers`
@@ -47,23 +39,9 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (1,'Иван Иванов','ivan@example.com','Москва','2026-11-05 08:35:58'),(2,'Пётр Петров','petr@example.com','Санкт-Петербург','2026-11-05 08:35:58'),(3,'Мария Сидорова','maria@example.com','Москва','2026-11-05 08:35:58'),(4,'Алексей Смирнов','alex@example.com','Казань','2026-11-05 08:35:58'),(5,'Ольга Кузнецова','olga@example.com','Новосибирск','2026-11-05 08:35:58');
+INSERT INTO `customers` VALUES (1,'Иван Иванов','ivan@example.com','Москва','2026-11-17 08:06:15'),(2,'Пётр Петров','petr@example.com','Санкт-Петербург','2026-11-17 08:06:15'),(3,'Мария Сидорова','maria@example.com','Москва','2026-11-17 08:06:15'),(4,'Алексей Смирнов','alex@example.com','Казань','2026-11-17 08:06:15'),(5,'Ольга Кузнецова','olga@example.com','Новосибирск','2026-11-17 08:06:15');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Temporary view structure for view `my_actions`
---
-
-DROP TABLE IF EXISTS `my_actions`;
-/*!50001 DROP VIEW IF EXISTS `my_actions`*/;
-SET @saved_cs_client     = @@character_set_client;
-/*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `my_actions` AS SELECT 
- 1 AS `event_time`,
- 1 AS `command_type`,
- 1 AS `argument`*/;
-SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `orders`
@@ -79,7 +57,9 @@ CREATE TABLE `orders` (
   `amount` decimal(10,2) NOT NULL,
   `status` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT 'new',
   PRIMARY KEY (`id`),
-  KEY `customer_id` (`customer_id`),
+  KEY `idx_order_date` (`order_date`),
+  KEY `idx_status_amount` (`status`,`amount`),
+  KEY `idx_customer_amount` (`customer_id`,`amount`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -93,25 +73,6 @@ LOCK TABLES `orders` WRITE;
 INSERT INTO `orders` VALUES (1,1,'2026-10-01',1500.00,'paid'),(2,1,'2026-10-05',2300.50,'paid'),(3,2,'2026-10-03',800.00,'new'),(4,3,'2026-10-07',4200.00,'paid'),(5,3,'2026-10-10',1100.00,'cancelled'),(6,4,'2026-10-12',950.00,'new');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Final view structure for view `my_actions`
---
-
-/*!50001 DROP VIEW IF EXISTS `my_actions`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8mb4 */;
-/*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `my_actions` AS select `mysql`.`general_log`.`event_time` AS `event_time`,`mysql`.`general_log`.`command_type` AS `command_type`,`mysql`.`general_log`.`argument` AS `argument` from `mysql`.`general_log` where ((`mysql`.`general_log`.`user_host` like '%root%') and (not((`mysql`.`general_log`.`argument` like 'SET %'))) and (not((`mysql`.`general_log`.`argument` like 'SHOW %'))) and (not((`mysql`.`general_log`.`argument` like 'SELECT @@%'))) and (not((`mysql`.`general_log`.`argument` like 'SELECT DATABASE()%'))) and (not((`mysql`.`general_log`.`argument` like 'SELECT * FROM my_actions%'))) and (not((`mysql`.`general_log`.`argument` like 'TRUNCATE TABLE mysql.general_log%')))) */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -122,4 +83,4 @@ SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-11-05  8:37:17
+-- Dump completed on 2026-11-17  8:22:15
