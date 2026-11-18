@@ -1,0 +1,47 @@
+2026-11-18T06:36:12.088339Z	    9 Connect	root@localhost on  using Socket
+2026-11-18T06:36:12.088485Z	    9 Query	select @@version_comment limit 1
+2026-11-18T06:36:12.203881Z	    9 Query	CREATE DATABASE sort_practice CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+2026-11-18T06:36:12.208032Z	    9 Query	SELECT DATABASE()
+2026-11-18T06:36:12.208189Z	    9 Init DB	sort_practice
+2026-11-18T06:36:12.208322Z	    9 Query	CREATE TABLE orders (id INT AUTO_INCREMENT PRIMARY KEY, customer_id INT NOT NULL, status VARCHAR(20) NOT NULL DEFAULT 'new', order_date DATE NOT NULL, amount DECIMAL(10,2) NOT NULL, INDEX idx_customer (customer_id)) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+2026-11-18T06:36:12.228253Z	    9 Query	INSERT INTO orders (customer_id, status, order_date, amount) SELECT FLOOR(1 + RAND() * 50), ELT(FLOOR(1 + RAND() * 4), 'new', 'paid', 'cancelled', 'shipped'), DATE_ADD('2026-01-01', INTERVAL FLOOR(RAND() * 365) DAY), ROUND(100 + RAND() * 4900, 2) FROM (SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10) a, (SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10) b, (SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5) c
+2026-11-18T06:36:12.245037Z	    9 Query	SELECT COUNT(*) FROM orders
+2026-11-18T06:36:12.245703Z	    9 Quit	
+2026-11-18T06:36:17.826991Z	   10 Connect	root@localhost on sort_practice using Socket
+2026-11-18T06:36:17.827355Z	   10 Query	select @@version_comment limit 1
+2026-11-18T06:36:17.846987Z	   10 Query	EXPLAIN SELECT * FROM orders ORDER BY amount DESC
+2026-11-18T06:36:17.848024Z	   10 Quit	
+2026-11-18T06:36:23.168758Z	   11 Connect	root@localhost on sort_practice using Socket
+2026-11-18T06:36:23.168909Z	   11 Query	select @@version_comment limit 1
+2026-11-18T06:36:23.171030Z	   11 Query	CREATE INDEX idx_amount ON orders(amount)
+2026-11-18T06:36:23.193370Z	   11 Query	EXPLAIN SELECT * FROM orders ORDER BY amount DESC
+2026-11-18T06:36:23.193592Z	   11 Quit	
+2026-11-18T06:36:29.456845Z	   12 Connect	root@localhost on sort_practice using Socket
+2026-11-18T06:36:29.457156Z	   12 Query	select @@version_comment limit 1
+2026-11-18T06:36:29.458458Z	   12 Query	EXPLAIN SELECT * FROM orders ORDER BY amount ASC
+2026-11-18T06:36:29.459020Z	   12 Query	CREATE INDEX idx_status_amount ON orders(status, amount)
+2026-11-18T06:36:29.480248Z	   12 Query	EXPLAIN SELECT * FROM orders ORDER BY status ASC, amount ASC
+2026-11-18T06:36:29.480443Z	   12 Query	EXPLAIN SELECT * FROM orders ORDER BY status ASC, amount DESC
+2026-11-18T06:36:29.480579Z	   12 Query	CREATE INDEX idx_status_amount_desc ON orders(status ASC, amount DESC)
+2026-11-18T06:36:29.500468Z	   12 Query	EXPLAIN SELECT * FROM orders ORDER BY status ASC, amount DESC
+2026-11-18T06:36:29.500641Z	   12 Quit	
+2026-11-18T06:36:35.156595Z	   13 Connect	root@localhost on sort_practice using Socket
+2026-11-18T06:36:35.156745Z	   13 Query	select @@version_comment limit 1
+2026-11-18T06:36:35.156879Z	   13 Query	DROP INDEX idx_status_amount ON orders
+2026-11-18T06:36:35.165657Z	   13 Query	DROP INDEX idx_status_amount_desc ON orders
+2026-11-18T06:36:35.174390Z	   13 Query	EXPLAIN SELECT status, COUNT(*) FROM orders GROUP BY status
+2026-11-18T06:36:35.174593Z	   13 Quit	
+2026-11-18T06:36:42.270451Z	   14 Connect	root@localhost on sort_practice using Socket
+2026-11-18T06:36:42.270627Z	   14 Query	select @@version_comment limit 1
+2026-11-18T06:36:42.270786Z	   14 Query	CREATE INDEX idx_status ON orders(status)
+2026-11-18T06:36:42.286644Z	   14 Query	EXPLAIN SELECT status, COUNT(*) FROM orders GROUP BY status
+2026-11-18T06:36:42.286895Z	   14 Quit	
+2026-11-18T06:36:47.722598Z	   15 Connect	root@localhost on sort_practice using Socket
+2026-11-18T06:36:47.722762Z	   15 Query	select @@version_comment limit 1
+2026-11-18T06:36:47.722921Z	   15 Query	EXPLAIN SELECT status, SUM(amount) FROM orders GROUP BY status
+2026-11-18T06:36:47.723202Z	   15 Quit	
+2026-11-18T06:36:55.081623Z	   16 Connect	root@localhost on sort_practice using Socket
+2026-11-18T06:36:55.081801Z	   16 Query	select @@version_comment limit 1
+2026-11-18T06:36:55.081976Z	   16 Query	CREATE INDEX idx_status_amount_cover ON orders(status, amount)
+2026-11-18T06:36:55.104834Z	   16 Query	EXPLAIN SELECT status, SUM(amount) FROM orders GROUP BY status
+2026-11-18T06:36:55.105107Z	   16 Quit	
