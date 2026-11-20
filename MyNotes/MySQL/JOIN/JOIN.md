@@ -159,6 +159,8 @@ WHERE u.vip_level = 3 AND o.status = 'paid';
 
 ![miao](./IMG/6.png)
 
+
+miao 
 ---
 
 ##  Лог и дамп
